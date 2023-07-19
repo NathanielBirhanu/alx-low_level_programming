@@ -15,7 +15,7 @@ void times_table(void)
 
 			if (p < 10)
 			{
-				_putchar('0' + p);
+				_putchar(p + '0');
 			}
 			else
 			{
