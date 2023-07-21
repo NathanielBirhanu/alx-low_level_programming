@@ -15,42 +15,25 @@ int main(void)
 	{
 		if (i % 3 == 0 && i % 5 != 0)
 		{
-			putchar(' ');
-			putchar('F');
-			putchar('i');
-			putchar('z');
-			putchar('z');
+			printf(" Fizz");
 		}
 		else if (i % 5 == 0 && i % 3 != 0)
 		{
-			putchar(' ');
-			putchar('B');
-			putchar('u');
-			putchar('z');
-			putchar('z');
+			printf(" Buzz");
 		}
 		else if (i % 3 == 0 && i % 5 == 0)
 		{
-			putchar(' ');
-			putchar('F');
-			putchar('i');
-			putchar('z');
-			putchar('z');
-			putchar('B');
-			putchar('u');
-			putchar('z');
-			putchar('z');
+			printf(" FizzBuzz");
 		}
 		else if (i == 1)
 		{
-			putchar(i + '0');
+			printf("%d", i);
 		}
 		else
 		{
-			putchar(' ');
-			putchar(i + '0');
+			printf(" %d", i);
 		}
 	}
-	putchar('\n');
+	printf("\n");
 	return (0);
 }
