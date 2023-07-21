@@ -11,26 +11,27 @@ int main(void)
 {
 	int i;
 
-	for (i = 0; i < 100; i++)
+	for (i = 1; i <= 100; i++)
 	{
 		if (i % 3 == 0 && i % 5 != 0)
 		{
+			putchar(' ');
 			putchar('F');
 			putchar('i');
 			putchar('z');
 			putchar('z');
-			putchar(' ');
 		}
 		else if (i % 5 == 0 && i % 3 != 0)
 		{
+			putchar(' ');
 			putchar('B');
 			putchar('u');
 			putchar('z');
 			putchar('z');
-			putchar(' ');
 		}
 		else if (i % 3 == 0 && i % 5 == 0)
 		{
+			putchar(' ');
 			putchar('F');
 			putchar('i');
 			putchar('z');
@@ -39,12 +40,15 @@ int main(void)
 			putchar('u');
 			putchar('z');
 			putchar('z');
-			putchar(' ');
+		}
+		else if (i == 1)
+		{
+			putchar(i + '0');
 		}
 		else
 		{
-			putchar(i + '0');
 			putchar(' ');
+			putchar(i + '0');
 		}
 	}
 	putchar('\n');
