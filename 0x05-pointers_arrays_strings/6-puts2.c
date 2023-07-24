@@ -12,10 +12,13 @@
  */
 void puts2(char *str)
 {
-	while (*str != '\0')
+	int length = strlen(str);
+	int i = 0;
+
+	while (i < length)
 	{
-		putchar(*str);
-		str += 2;
+		putchar(str[i]);
+		i += 2;
 	}
 	putchar('\n');
 }
