@@ -34,14 +34,14 @@ int _atoi(char *s)
 	{
 		digit = *s - '0';
 
-		if (result > INT_MAX / 10 ||
-				(result == INT_MAX / 10 && digit > INT_MAX % 10))
+		if (result < INT_MIN / 10 ||
+				(result == INT_MIN / 10 && digit > -(INT_MIN % 10)))
 		{
 			/* Overflow detected */
 			return (sign == 1 ? INT_MAX : INT_MIN);
 		}
 
-		result = result * 10 + digit;
+		result = result * 10 - digit;
 		s++;
 	}
 
