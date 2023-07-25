@@ -12,37 +12,48 @@ int _atoi(char *s)
 	int sign = 1;
 	int result = 0;
 	int digit;
+	int found_number = 0;
 
-	while (*s == ' ' || *s == '\t' || *s == '\n' ||
-			*s == '\v' || *s == '\f' || *s == '\r')
+	while (*s)
 	{
-		s++;
-	}
-
-	if (*s == '-')
-	{
-		sign = -1;
-		s++;
-	}
-	else if (*s == '+')
-	{
-		sign = 1;
-		s++;
-	}
-
-	while (*s >= '0' && *s <= '9')
-	{
-		digit = *s - '0';
-
-		if (result < INT_MIN / 10 ||
-				(result == INT_MIN / 10 && digit > -(INT_MIN % 10)))
+		if (*s == '-')
 		{
-			/* Overflow detected */
-			return (sign == 1 ? INT_MAX : INT_MIN);
+			sign = -sign;
+			s++;
 		}
+		else if (*s == '+')
+		{
+			s++;
+		}
+		else if (*s >= '0' && *s <= '9')
+		{
+			found_number = 1;
 
-		result = result * 10 - digit;
-		s++;
+			digit = *s - '0';
+
+			if (result > INT_MAX / 10 ||
+					(result == INT_MAX / 10 && digit > INT_MAX % 10))
+			{
+				/* Overflow detected */
+				return (sign == 1 ? INT_MAX : INT_MIN);
+			}
+
+			result = result * 10 + digit;
+			s++;
+		}
+		else
+		{
+			if (found_number)
+			{
+				/* We've seen at least one digit, so we're done */
+				break;
+			}
+			else
+			{
+				/* Skip non-digits at the start of the string */
+				s++;
+			}
+		}
 	}
 
 	return (sign * result);
