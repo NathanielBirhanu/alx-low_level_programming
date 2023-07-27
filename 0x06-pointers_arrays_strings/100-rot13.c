@@ -10,24 +10,25 @@
 char *rot13(char *str)
 {
 	int i, j;
+	char c;
 
 	for (i = 0; str[i] != '\0'; i++)
 	{
-		for (j = 0; j < 13; j++)
+		c = str[i];
+		for (j = 0; j < 13 && c != '\0'; j++)
 		{
-			if ((str[i] >= 'a' && str[i] < 'n') ||
-					(str[i] >= 'A' && str[i] < 'N'))
+			if ((c >= 'a' && c <= 'm') ||
+					(c >= 'A' && c <= 'M'))
 			{
-				str[i] += 13;
-				break;
+				c += 13;
 			}
-			else if ((str[i] >= 'n' && str[i] <= 'z') ||
-					(str[i] >= 'N' && str[i] <= 'Z'))
+			else if ((c >= 'n' && c <= 'z') ||
+					(c >= 'N' && c <= 'Z'))
 			{
-				str[i] -= 13;
-				break;
+				c -= 13;
 			}
 		}
+		str[i] = c;
 	}
 	return (str);
 }
