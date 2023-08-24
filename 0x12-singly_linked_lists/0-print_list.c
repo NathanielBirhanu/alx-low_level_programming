@@ -8,19 +8,19 @@
  */
 size_t print_list(const list_t *h)
 {
+	size_t count;
+        const list_t *current = h;
+
 	if (h == NULL)
 	{
 		printf("[0] (nil)");
 		return (0);
 	}
-	size_t count = 0;
-	const list_t *current = h;
-
 	while (current != NULL)
 	{
 		count++;
 		current = current->next;
 	}
-	printf("%zu", count);
+	printf("%lu", count);
 	return (count);
 }
