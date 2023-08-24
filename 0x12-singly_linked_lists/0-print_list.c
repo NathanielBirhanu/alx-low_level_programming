@@ -20,5 +20,6 @@ size_t print_list(const list_t *h)
 		count++;
 		current = current->next;
 	}
+	printf("-> %lu elements\n\n", (unsigned long)count);
 	return (count);
 }
