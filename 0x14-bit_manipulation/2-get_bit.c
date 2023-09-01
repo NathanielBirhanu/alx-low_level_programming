@@ -8,11 +8,14 @@
  */
 int get_bit(unsigned long int n, unsigned int index)
 {
+	unsigned long int mask;
+	int bit;
+
 	if (index >= sizeof(unsigned long int) * 8)
 		return (-1); /* Return -1 if the index is out of range */
 
-	unsigned long int mask = 1UL << index;
-	int bit = (n & mask) ? 1 : 0; /* Check if the bit at the given index is set */
+	mask = 1UL << index;
+	bit = (n & mask) ? 1 : 0; /* Check if the bit at the given index is set */
 
 	return (bit);
 }
