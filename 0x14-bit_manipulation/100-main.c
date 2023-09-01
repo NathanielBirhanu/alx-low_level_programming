@@ -1,11 +1,9 @@
 #include <stdio.h>
-#include "main.h"
 int get_endianness(void);
 int main(void)
 {
-    int n;
 
-    n = get_endianness();
+    int n = get_endianness();
     if (n != 0)
     {
         printf("Little Endian\n");
