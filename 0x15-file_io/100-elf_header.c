@@ -4,121 +4,120 @@
 #include <unistd.h>
 #include <elf.h>
 
-/**
- * print_error - Print error message and exit with status code 98
- * @message: The error message
- *
- * Description: Prints the error message to stderr and exits with status code 98.
- */
 void print_error(const char *message)
 {
 	fprintf(stderr, "Error: %s\n", message);
 	exit(98);
 }
 
-/**
- * print_elf_header - Print the information contained in the ELF header
- * @header: Pointer to the ELF header structure
- *
- * Description: Prints the information contained in the ELF header structure.
- */
 void print_elf_header(const Elf64_Ehdr *header)
 {
-	int i;
+	printf("ELF Header:\n");
 
-	printf("Magic:   ");
-	for (i = 0; i < EI_NIDENT; ++i)
+	printf("  Magic:   ");
+	for (int i = 0; i < EI_NIDENT; ++i)
 		printf("%02x ", header->e_ident[i]);
 	printf("\n");
 
-	printf("Class:                             %s\n",
-	       (header->e_ident[EI_CLASS] == ELFCLASS32) ? "ELF32" : "ELF64");
-	printf("Data:                              %s\n",
-	       (header->e_ident[EI_DATA] == ELFDATA2LSB) ? "2's complement, little endian" :
-	       "2's complement, big endian");
-	printf("Version:                           %d (current)\n",
-	       header->e_ident[EI_VERSION]);
+	printf("  Class:                             ");
+	switch (header->e_ident[EI_CLASS])
+	{
+	case ELFCLASS32:
+		printf("ELF32\n");
+		break;
+	case ELFCLASS64:
+		printf("ELF64\n");
+		break;
+	default:
+		printf("Unknown\n");
+		break;
+	}
 
-	printf("OS/ABI:                            ");
+	printf("  Data:                              ");
+	switch (header->e_ident[EI_DATA])
+	{
+	case ELFDATA2LSB:
+		printf("2's complement, little endian\n");
+		break;
+	case ELFDATA2MSB:
+		printf("2's complement, big endian\n");
+		break;
+	default:
+		printf("Unknown\n");
+		break;
+	}
+
+	printf("  Version:                           %d (current)\n", header->e_ident[EI_VERSION]);
+
+	printf("  OS/ABI:                            ");
 	switch (header->e_ident[EI_OSABI])
 	{
 	case ELFOSABI_SYSV:
-		printf("UNIX System V ABI");
+		printf("UNIX - System V\n");
 		break;
 	case ELFOSABI_HPUX:
-		printf("HP-UX");
+		printf("HP-UX\n");
 		break;
 	case ELFOSABI_NETBSD:
-		printf("NetBSD");
+		printf("UNIX - NetBSD\n");
 		break;
 	case ELFOSABI_LINUX:
-		printf("Linux");
+		printf("UNIX - Linux\n");
 		break;
 	case ELFOSABI_SOLARIS:
-		printf("Solaris");
+		printf("UNIX - Solaris\n");
 		break;
 	case ELFOSABI_AIX:
-		printf("AIX");
+		printf("UNIX - AIX\n");
 		break;
 	case ELFOSABI_IRIX:
-		printf("IRIX");
+		printf("UNIX - IRIX\n");
 		break;
 	case ELFOSABI_FREEBSD:
-		printf("FreeBSD");
+		printf("UNIX - FreeBSD\n");
 		break;
 	case ELFOSABI_TRU64:
-		printf("TRU64 UNIX");
+		printf("UNIX - TRU64\n");
 		break;
 	case ELFOSABI_MODESTO:
-		printf("Novell Modesto");
+		printf("Novell - Modesto\n");
 		break;
 	case ELFOSABI_OPENBSD:
-		printf("OpenBSD");
+		printf("UNIX - OpenBSD\n");
 		break;
 	default:
-		printf("Unknown");
+		printf("Unknown\n");
 		break;
 	}
-	printf("\n");
 
-	printf("ABI Version:                       %d\n",
-	       header->e_ident[EI_ABIVERSION]);
+	printf("  ABI Version:                       %d\n", header->e_ident[EI_ABIVERSION]);
 
-	printf("Type:                              ");
+	printf("  Type:                              ");
 	switch (header->e_type)
 	{
 	case ET_NONE:
-		printf("None (No file type)");
+		printf("NONE (No file type)\n");
 		break;
 	case ET_REL:
-		printf("Relocatable object file");
+		printf("REL (Relocatable file)\n");
 		break;
 	case ET_EXEC:
-		printf("Executable file");
+		printf("EXEC (Executable file)\n");
 		break;
 	case ET_DYN:
-		printf("Shared object file");
+		printf("DYN (Shared object file)\n");
 		break;
 	case ET_CORE:
-		printf("Core file");
+		printf("CORE (Core file)\n");
 		break;
 	default:
-		printf("Unknown");
+		printf("Unknown\n");
 		break;
 	}
-	printf("\n");
-	printf("Entry point address:               0x%lx\n", header->e_entry);
+
+	printf("  Entry point address:               0x%lx\n", header->e_entry);
 }
 
-/**
- * main - Program entry point
- * @argc: Number of command-line arguments
- * @argv: Array of command-line argument strings
- * Return: 0 on success, 98 on error
- *
- * Description: The main function of the program. Reads an ELF header from a file
- * specified as a command-line argument and prints its information.
- */
 int main(int argc, char *argv[])
 {
 	const char *filename;
