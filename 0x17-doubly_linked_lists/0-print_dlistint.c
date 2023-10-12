@@ -12,7 +12,7 @@ size_t print_dlistint(const dlistint_t *h)
 
 	if (h == NULL)
 	{
-		printf("Nothing to print");
+		printf("Nothing to print\n");
 		return (count);
 	}
 
