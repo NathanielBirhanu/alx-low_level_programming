@@ -1,4 +1,5 @@
 #!/bin/bash
-gcc -wall -wextra -werror -pedantic -c -fPIC *.c
+gcc -c -Wall -Werror -fpic *.c
 gcc -shared -o liball.so *.o
-export LD_LIBRARY_PATH=.:$LD_LIBRARY_PATH
+rm *.o
+nm -D --defined-only liball.so
